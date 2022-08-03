@@ -5,6 +5,7 @@ function insertToDoTask() {
     var dd = document.getElementById('dueDate').value;
     //var curr_date = getTime();
     var todayDate = new Date();
+    var dd1 = new Date(dd);
 
     if (taskv==null || taskv==""){  
         alert("Task can't be blank");  
@@ -19,7 +20,10 @@ function insertToDoTask() {
         alert("Due Date is not given so end it by EOD");
         dd = todayDate;
     }
-    
+    else if (todayDate > dd1){
+        alert("Due Date can't be before today!!");
+        return false;
+    }
     // else if(dd.getTime() < curr_date.getTime()){  
     //     alert("Assignee can't be blank.");  
     //     return false;  
