@@ -1,6 +1,6 @@
 
 enum taskStatus{
-    inProgress, completed,
+    IN_PROGRESS, COMPLETED,
 }
 
 let taskIdCounter : number = 0;
@@ -12,15 +12,28 @@ type data = { taskName : string;
     status : taskStatus;
     id : number;
 }
+type assignee = {
+    name : string;
+    email : string;
+}
 
 function loadOptions() : void{
-    let assigneeNames = ["Jayesh",  "Shibobrota", "Sarthak", "Anubhav", "Rishab", "Prabhjot", "Rakesh", "Abdul", "Hari Shankar", "Chetan", "Rahul"]
+    
+    //let assigneeNames = ["Jayesh",  "Shibobrota", "Sarthak", "Anubhav", "Rishab", "Prabhjot", "Rakesh", "Abdul", "Hari Shankar", "Chetan", "Rahul"]
+    let assigneeNames : Array<assignee>  = [{name : "Rahul", email : "rahul.varshney@dream11.com"},
+                        {name : "Jayesh", email : "jayesh@dream11.com"},
+                        {name : "Shibobroota", email : "shibobrota@dream11.com"},
+                        {name : "Sarthak", email : "sarthak@dream11.com"},
+                        {name : "Anubhav", email : "anubhav@dream11.com"},
+                        {name : "Rishab", email : "rishab@dream11.com"},
+                        {name : "Prabjhot", email : "prabjhot@dream11.com"} ]
+    
     let dropDown = document.getElementById("assignee");
     
     for(let i=0; i < assigneeNames.length; i++){
         var dropDownOption = document.createElement("option");
-        dropDownOption.textContent = assigneeNames[i];
-        dropDownOption.value = assigneeNames[i];
+        dropDownOption.textContent = assigneeNames[i].name;
+        dropDownOption.value = assigneeNames[i].name;
         if (dropDown){
             dropDown.appendChild(dropDownOption);
         }
@@ -36,6 +49,7 @@ function insertToDoTask() : void{
     taskIdCounter += 1;
     
     if (!checkInput(taskValue.trim(), assigneeValue.trim(), dueDate.trim())){
+        taskIdCounter -= 1;
         return;
     }
     let todayDate = new Date();
@@ -54,7 +68,7 @@ function insertToDoTask() : void{
     
     
     taskData.push({taskName : taskValue, assignee : assigneeValue, 
-        dueDate : dueDateObj, status : taskStatus.inProgress, 
+        dueDate : dueDateObj, status : taskStatus.IN_PROGRESS, 
         id : taskIdCounter});
     checkbox.addEventListener("click", changeTableOnCheckbox);
     resetInputs();
@@ -91,6 +105,7 @@ function resetInputs() : void{
     (document.getElementById("task")! as HTMLInputElement).value = "";
     (document.getElementById("assignee")! as HTMLInputElement).value = "";
     (document.getElementById("dueDate")! as HTMLInputElement).value = "";
+    (document.getElementsByName("task")[0] as HTMLInputElement).placeholder = "Enter a task name";
 }
 
 function checkInput(taskValue : string, assigneeValue : string, dueDate : string ):boolean{
@@ -99,11 +114,12 @@ function checkInput(taskValue : string, assigneeValue : string, dueDate : string
     todayDate.setHours(0, 0, 0, 0);
 
     if (taskValue == null || taskValue == ""){  
-        alert("Task can't be blank");  
+        //alert("Task can't be blank");
+        (document.getElementsByName("task")[0] as HTMLInputElement).placeholder = "Please enter a valid task name!";
         return false;  
     }
     else if(assigneeValue ==null || assigneeValue ==""){  
-        alert("Assignee can't be blank.");  
+        alert("Assignee can't be blank.");
         return false;  
     }
     else if (todayDate > dueDateObj){
@@ -141,10 +157,10 @@ function appendTaskToCompletedTable(cell : NodeListOf<ChildNode>): void{
 }
 
 
-function changeTableOnCheckbox(event : any) : void{
-    let taskId : number = +event.currentTarget.id;
+function changeTableOnCheckbox(event : Event) : void{
+    let taskId : number = +(event.currentTarget as HTMLInputElement).id;
     console.log(taskId);
-    taskData[taskId - 1].status = taskStatus.completed;
+    taskData[taskId - 1].status = taskStatus.COMPLETED;
     
     let progressTableRow = document.getElementById(`task_id${taskId}`);
     document.getElementById(`task_id${taskId}`)?.remove();
