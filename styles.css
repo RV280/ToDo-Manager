@@ -68,3 +68,10 @@
     max-height: 500px;
     margin-left: 10%;
     }
+
+    #invalid-task{
+        text-align: left;
+        font-family: sans-serif;
+        color : grey;
+        margin-left : 500px; 
+    }
