@@ -1,6 +1,5 @@
-
 enum taskStatus{
-    IN_PROGRESS, COMPLETED,
+    IN_PROGRESS, COMPLETED
 }
 
 let taskIdCounter : number = 0;
@@ -22,7 +21,7 @@ function loadOptions() : void{
     //let assigneeNames = ["Jayesh",  "Shibobrota", "Sarthak", "Anubhav", "Rishab", "Prabhjot", "Rakesh", "Abdul", "Hari Shankar", "Chetan", "Rahul"]
     let assigneeNames : Array<assignee>  = [{name : "Rahul", email : "rahul.varshney@dream11.com"},
                         {name : "Jayesh", email : "jayesh@dream11.com"},
-                        {name : "Shibobroota", email : "shibobrota@dream11.com"},
+                        {name : "Shibobrota", email : "shibobrota@dream11.com"},
                         {name : "Sarthak", email : "sarthak@dream11.com"},
                         {name : "Anubhav", email : "anubhav@dream11.com"},
                         {name : "Rishab", email : "rishab@dream11.com"},
